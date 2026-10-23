@@ -12,16 +12,24 @@ Não precisa de servidor, não tem custo e os convidados não precisam fazer log
 
 ## Publicação atual
 
-- **Site (link do QR code):** https://script.google.com/macros/s/AKfycbzCPuVDbEgNhgDQT7e3atpElBt1qA5RzUxax8zKJyWAgazJbK84FOGGS2OTgzgQT3DeJw/exec
+- **Site (link do QR code):** https://treepo1.github.io/soso-fotos/ (GitHub Pages, pasta `docs/`)
+- **API que salva no Drive (Apps Script):** https://script.google.com/macros/s/AKfycbzCPuVDbEgNhgDQT7e3atpElBt1qA5RzUxax8zKJyWAgazJbK84FOGGS2OTgzgQT3DeJw/exec
 - **Editor do script:** https://script.google.com/d/10RxhSqJkiJNhKTdfP3XEsKv1zN6OzTQvcgTsf4VdDzOak1Acofxh0LmK/edit
 - **Fotos:** pasta "Fotos - Soso faz 1 aninho!" no Google Drive (criada automaticamente)
 
 Para gerar o cartaz, abra `qrcode.html` no navegador e clique em **Imprimir**.
 
+> O site fica fora do Google de propósito: páginas servidas pelo Apps Script rodam
+> dentro de iframes do Google e o Safari do iPhone costuma bloqueá-las. A página em
+> `docs/index.html` envia as fotos para o `doPost` do Apps Script via `fetch`.
+
 ## Alterações depois de publicado
 
-Publicado com o [clasp](https://github.com/google/clasp). Para atualizar mantendo a
-mesma URL (e o mesmo QR code):
+Mudanças na página (`docs/index.html`): faça commit e `git push`; o GitHub Pages
+atualiza em ~1 minuto.
+
+Mudanças no backend (`Code.gs`), publicado com o [clasp](https://github.com/google/clasp). Para atualizar mantendo a
+mesma URL da API:
 
 ```sh
 clasp push

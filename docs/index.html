@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Soso faz 1 aninho!</title>
+  <style>
+    :root {
+      --bg: #fff7f0;
+      --card: #ffffff;
+      --ink: #4a3b52;
+      --muted: #8c7d94;
+      --pink: #ff8fab;
+      --pink-dark: #f2668b;
+      --blue: #7cc6fe;
+      --blue-dark: #4fa9ef;
+      --ok: #3bb273;
+      --err: #e05a5a;
+    }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html, body { margin: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      background-image:
+        radial-gradient(circle at 10% 10%, #ffe1ea 0 60px, transparent 61px),
+        radial-gradient(circle at 92% 18%, #dff1ff 0 44px, transparent 45px),
+        radial-gradient(circle at 85% 92%, #fff0c9 0 70px, transparent 71px);
+      background-attachment: fixed;
+      color: var(--ink);
+      min-height: 100vh;
+      padding: max(24px, env(safe-area-inset-top)) 20px max(32px, env(safe-area-inset-bottom));
+    }
+    main { max-width: 440px; margin: 0 auto; }
+    header { text-align: center; margin: 8px 0 28px; }
+    .emoji { font-size: 56px; line-height: 1; }
+    h1 { font-size: 30px; margin: 12px 0 6px; letter-spacing: -0.5px; }
+    .sub { color: var(--muted); margin: 0; font-size: 16px; line-height: 1.4; }
+
+    label.name {
+      display: block; font-size: 14px; color: var(--muted); margin: 0 4px 6px;
+    }
+    input[type=text] {
+      width: 100%; font-size: 17px; padding: 14px 16px; border-radius: 14px;
+      border: 2px solid #f0e4ea; background: var(--card); color: var(--ink); outline: none;
+    }
+    input[type=text]:focus { border-color: var(--pink); }
+
+    .actions { display: grid; gap: 14px; margin: 22px 0 8px; }
+    .btn {
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+      width: 100%; padding: 22px 16px; border-radius: 20px; border: 0;
+      font-size: 20px; font-weight: 700; color: #fff; cursor: pointer;
+      box-shadow: 0 6px 0 rgba(0,0,0,.08);
+      transition: transform .08s ease;
+    }
+    .btn:active { transform: translateY(3px); box-shadow: 0 3px 0 rgba(0,0,0,.08); }
+    .btn span.icon { font-size: 28px; }
+    .btn.camera { background: var(--pink); }
+    .btn.gallery { background: var(--blue); }
+    input[type=file] { display: none; }
+
+    .status { text-align: center; color: var(--muted); font-size: 15px; min-height: 22px; margin: 18px 0 10px; }
+    .status.done { color: var(--ok); font-weight: 600; }
+
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .thumb {
+      position: relative; aspect-ratio: 1; border-radius: 12px; overflow: hidden;
+      background: #f3e9ee;
+    }
+    .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .thumb .badge {
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      font-size: 26px; background: rgba(255,255,255,.55);
+    }
+    .thumb.ok .badge { background: transparent; align-items: flex-end; justify-content: flex-end; padding: 6px; font-size: 20px; }
+    .thumb.err { cursor: pointer; }
+    .thumb.err .badge { background: rgba(224,90,90,.55); color: #fff; font-size: 13px; font-weight: 700; text-align: center; padding: 6px; }
+    .spinner {
+      width: 26px; height: 26px; border-radius: 50%;
+      border: 3px solid rgba(74,59,82,.2); border-top-color: var(--ink);
+      animation: spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    footer { text-align: center; color: var(--muted); font-size: 13px; margin-top: 28px; }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="emoji">🎈🎂🎈</div>
+      <h1>Soso faz 1 aninho!</h1>
+      <p class="sub">Compartilhe as fotos que você tirou na festa.<br>Elas vão direto para o álbum da família 💛</p>
+    </header>
+
+    <label class="name" for="guest">Seu nome (opcional)</label>
+    <input type="text" id="guest" placeholder="Ex.: Tia Ana" autocomplete="name" maxlength="40">
+
+    <div class="actions">
+      <button class="btn camera" type="button" onclick="document.getElementById('camera').click()">
+        <span class="icon">📷</span> Tirar foto
+      </button>
+      <button class="btn gallery" type="button" onclick="document.getElementById('gallery').click()">
+        <span class="icon">🖼️</span> Escolher da galeria
+      </button>
+    </div>
+
+    <input type="file" id="camera" accept="image/*" capture="environment">
+    <input type="file" id="gallery" accept="image/*" multiple>
+
+    <div class="status" id="status"></div>
+    <div class="grid" id="grid"></div>
+
+    <footer>Obrigado por celebrar com a gente! 🥳</footer>
+  </main>
+
+  <script>
+    const API_URL = 'https://script.google.com/macros/s/AKfycbzCPuVDbEgNhgDQT7e3atpElBt1qA5RzUxax8zKJyWAgazJbK84FOGGS2OTgzgQT3DeJw/exec';
+    const MAX_SIDE = 2400;      // redimensiona fotos enormes para subir rápido
+    const JPEG_QUALITY = 0.88;
+    const MAX_RAW_BYTES = 35 * 1024 * 1024; // limite quando não dá para comprimir
+
+    const guestInput = document.getElementById('guest');
+    const statusEl = document.getElementById('status');
+    const grid = document.getElementById('grid');
+
+    guestInput.value = localStorage.getItem('guestName') || '';
+    guestInput.addEventListener('input', () => localStorage.setItem('guestName', guestInput.value.trim()));
+
+    const queue = [];
+    let running = false;
+    let sent = 0, failed = 0;
+
+    for (const id of ['camera', 'gallery']) {
+      document.getElementById(id).addEventListener('change', (e) => {
+        for (const file of e.target.files) enqueue(file);
+        e.target.value = '';
+      });
+    }
+
+    function enqueue(file) {
+      const el = document.createElement('div');
+      el.className = 'thumb';
+      el.innerHTML = '<div class="badge"><div class="spinner"></div></div>';
+      const preview = URL.createObjectURL(file);
+      const img = new Image();
+      img.onload = () => el.prepend(img);
+      img.src = preview;
+      grid.prepend(el);
+      queue.push({ file, el, preview });
+      updateStatus();
+      run();
+    }
+
+    async function run() {
+      if (running) return;
+      running = true;
+      while (queue.length) {
+        const item = queue.shift();
+        updateStatus();
+        await upload(item);
+      }
+      running = false;
+      updateStatus();
+    }
+
+    async function upload(item) {
+      const badge = item.el.querySelector('.badge');
+      try {
+        const dataUrl = await prepare(item.file);
+        await withRetry(() => send(dataUrl, guestInput.value.trim()), 3);
+        item.el.className = 'thumb ok';
+        badge.textContent = '✅';
+        sent++;
+      } catch (err) {
+        console.error(err);
+        item.el.className = 'thumb err';
+        badge.textContent = 'Falhou — toque para tentar de novo';
+        failed++;
+        item.el.onclick = () => {
+          item.el.onclick = null;
+          failed--;
+          item.el.className = 'thumb';
+          badge.innerHTML = '<div class="spinner"></div>';
+          queue.push(item);
+          run();
+        };
+      }
+    }
+
+    function updateStatus() {
+      const pending = queue.length + (running ? 1 : 0);
+      statusEl.classList.remove('done');
+      if (pending > 0) {
+        statusEl.textContent = `Enviando… faltam ${pending} foto${pending > 1 ? 's' : ''}. Não feche esta página.`;
+      } else if (sent > 0 || failed > 0) {
+        statusEl.classList.toggle('done', failed === 0);
+        statusEl.textContent = failed
+          ? `${sent} enviada${sent !== 1 ? 's' : ''}, ${failed} com erro (toque nela para reenviar).`
+          : `🎉 ${sent} foto${sent > 1 ? 's' : ''} enviada${sent > 1 ? 's' : ''}! Obrigado!`;
+      } else {
+        statusEl.textContent = '';
+      }
+    }
+
+    // Comprime para JPEG; se o navegador não conseguir abrir a imagem
+    // (ex.: HEIC em alguns Androids), envia o arquivo original.
+    async function prepare(file) {
+      try {
+        return await compress(file);
+      } catch (e) {
+        if (file.size > MAX_RAW_BYTES) throw new Error('Arquivo grande demais');
+        return await readAsDataUrl(file);
+      }
+    }
+
+    function compress(file) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        const url = URL.createObjectURL(file);
+        img.onload = () => {
+          URL.revokeObjectURL(url);
+          const scale = Math.min(1, MAX_SIDE / Math.max(img.naturalWidth, img.naturalHeight));
+          const w = Math.round(img.naturalWidth * scale);
+          const h = Math.round(img.naturalHeight * scale);
+          if (!w || !h) return reject(new Error('Imagem vazia'));
+          const canvas = document.createElement('canvas');
+          canvas.width = w; canvas.height = h;
+          canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+          resolve(canvas.toDataURL('image/jpeg', JPEG_QUALITY));
+        };
+        img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('Não foi possível abrir a imagem')); };
+        img.src = url;
+      });
+    }
+
+    function readAsDataUrl(file) {
+      return new Promise((resolve, reject) => {
+        const r = new FileReader();
+        r.onload = () => resolve(r.result);
+        r.onerror = () => reject(r.error);
+        r.readAsDataURL(file);
+      });
+    }
+
+    async function send(dataUrl, name) {
+      // Corpo como text/plain: requisição "simples", sem preflight de CORS.
+      const res = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ image: dataUrl, name }),
+      });
+      const data = await res.json();
+      if (!data.ok) throw new Error(data.error || 'Falha no envio');
+      return data.file;
+    }
+
+    async function withRetry(fn, attempts) {
+      for (let i = 1; ; i++) {
+        try { return await fn(); }
+        catch (e) {
+          if (i >= attempts) throw e;
+          await new Promise(r => setTimeout(r, 1500 * i));
+        }
+      }
+    }
+  </script>
+</body>
+</html>

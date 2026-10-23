@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>QR Code das fotos</title>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+  <style>
+    body { font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif; color: #4a3b52; margin: 0; background: #f4f4f4; }
+    .controls { max-width: 640px; margin: 24px auto; padding: 0 16px; display: grid; gap: 8px; }
+    .controls input { font-size: 16px; padding: 10px 12px; border: 1px solid #ccc; border-radius: 8px; }
+    .controls button { font-size: 16px; padding: 10px; border: 0; border-radius: 8px; background: #ff8fab; color: #fff; font-weight: 700; cursor: pointer; }
+    .poster {
+      width: 148mm; min-height: 210mm; margin: 0 auto 40px; background: #fff7f0;
+      padding: 18mm 14mm; text-align: center; box-sizing: border-box;
+      border-radius: 6mm; box-shadow: 0 4px 20px rgba(0,0,0,.1);
+    }
+    .poster .emoji { font-size: 52px; }
+    .poster h1 { font-size: 34px; margin: 10px 0 4px; }
+    .poster p { font-size: 19px; margin: 0 0 20px; color: #8c7d94; }
+    #qr { background: #fff; display: inline-block; padding: 6mm; border-radius: 5mm; }
+    #qr img, #qr svg { width: 95mm; height: 95mm; display: block; }
+    .steps { font-size: 16px; margin-top: 18px; line-height: 1.7; }
+    @media print {
+      body { background: #fff; }
+      .controls { display: none; }
+      .poster { box-shadow: none; margin: 0 auto; }
+      @page { size: A5; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="controls">
+    <input id="url" value="https://script.google.com/macros/s/AKfycbzCPuVDbEgNhgDQT7e3atpElBt1qA5RzUxax8zKJyWAgazJbK84FOGGS2OTgzgQT3DeJw/exec" placeholder="Cole aqui a URL do app (https://script.google.com/macros/s/.../exec)">
+    <input id="title" value="Soso faz 1 aninho!">
+    <button onclick="window.print()">Imprimir</button>
+  </div>
+
+  <div class="poster">
+    <div class="emoji">🎈📸🎈</div>
+    <h1 id="posterTitle"></h1>
+    <p>Compartilhe suas fotos da festa com a gente!</p>
+    <div id="qr"></div>
+    <div class="steps">
+      1. Aponte a câmera do celular para o QR code<br>
+      2. Tire uma foto ou escolha da galeria<br>
+      3. Pronto! 💛
+    </div>
+  </div>
+
+  <script>
+    const urlInput = document.getElementById('url');
+    const titleInput = document.getElementById('title');
+
+    function render() {
+      document.getElementById('posterTitle').textContent = titleInput.value;
+      const qr = qrcode(0, 'M');
+      qr.addData(urlInput.value.trim() || 'https://example.com');
+      qr.make();
+      document.getElementById('qr').innerHTML = qr.createSvgTag({ cellSize: 8, margin: 0, scalable: true });
+    }
+    urlInput.addEventListener('input', render);
+    titleInput.addEventListener('input', render);
+    render();
+  </script>
+</body>
+</html>

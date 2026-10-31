@@ -29,9 +29,21 @@
       background-attachment: fixed;
       color: var(--ink);
       min-height: 100vh;
-      padding: max(24px, env(safe-area-inset-top)) 20px max(32px, env(safe-area-inset-bottom));
+      padding: max(44px, env(safe-area-inset-top)) 32px max(44px, env(safe-area-inset-bottom));
     }
-    main { max-width: 440px; margin: 0 auto; }
+    main { position: relative; z-index: 1; max-width: 440px; margin: 0 auto; }
+
+    .sea {
+      position: fixed; inset: 0; pointer-events: none;
+      font-size: clamp(20px, 3vw, 40px); line-height: 1;
+    }
+    .sea div { position: absolute; display: flex; justify-content: space-between; }
+    .sea .top { top: 6px; left: 4px; right: 4px; }
+    .sea .bottom { bottom: 6px; left: 4px; right: 4px; }
+    .sea .left, .sea .right { top: 2.2em; bottom: 2.2em; flex-direction: column; }
+    .sea .left { left: 4px; }
+    .sea .right { right: 4px; }
+
     header { text-align: center; margin: 8px 0 28px; }
     .hero { display: block; width: 100%; height: auto; border-radius: 20px; box-shadow: 0 6px 0 rgba(0,0,0,.08); }
     h1 { font-size: 30px; margin: 12px 0 6px; letter-spacing: -0.5px; }
@@ -78,6 +90,13 @@
   </style>
 </head>
 <body>
+  <div class="sea" aria-hidden="true">
+    <div class="top"><span>🐙</span><span>🐠</span><span>🐢</span><span>🐚</span><span>🐬</span><span>🦀</span></div>
+    <div class="left"><span>🐡</span><span>🦞</span><span>⭐</span><span>🐟</span><span>🦑</span></div>
+    <div class="right"><span>🐳</span><span>🐚</span><span>🐠</span><span>🐙</span><span>🐢</span></div>
+    <div class="bottom"><span>🦀</span><span>🐬</span><span>🐟</span><span>🐡</span><span>🦞</span><span>🐳</span></div>
+  </div>
+
   <main>
     <header>
       <img class="hero" src="soso.jpg" width="1280" height="853" alt="Sophia com vestido verde na decoração de fundo do mar">

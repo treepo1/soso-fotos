@@ -19,27 +19,24 @@
     }
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     html, body { margin: 0; }
+    /* No html para o fundo passar por trás das barras do navegador no iPhone.
+       Em telas altas a imagem fica na largura da tela, presa embaixo, para
+       não cortar os animais; a segunda camada estica a faixa lisa do topo. */
+    html {
+      background:
+        url(fundo.jpg) bottom / 100% auto no-repeat,
+        url(fundo.jpg) top / 100% 800% no-repeat var(--bg);
+    }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      background: var(--bg);
       color: var(--ink);
       min-height: 100vh;
       padding: max(24px, env(safe-area-inset-top)) 20px max(32px, env(safe-area-inset-bottom));
-    }
-    /* Elemento fixo porque background-attachment: fixed falha no iPhone.
-       Em telas altas a imagem fica na largura da tela, presa embaixo, para
-       não cortar os animais; a segunda camada estica a faixa lisa do topo. */
-    body::before {
-      content: ""; position: fixed; inset: 0; z-index: -1;
-      background:
-        url(fundo.jpg) bottom / 100% auto no-repeat,
-        url(fundo.jpg) top / 100% 800% no-repeat;
     }
     main { max-width: 440px; margin: 0 auto; }
     header { text-align: center; margin: 8px 0 28px; }
     .hero { display: block; width: 100%; height: auto; border-radius: 20px; box-shadow: 0 6px 0 rgba(0,0,0,.08); }
     h1 { font-size: 30px; margin: 12px 0 6px; letter-spacing: -0.5px; }
-    .sub { color: var(--muted); margin: 0; font-size: 16px; line-height: 1.4; }
 
     .actions { display: grid; gap: 14px; margin: 22px 0 8px; }
     .btn {
@@ -86,7 +83,6 @@
     <header>
       <img class="hero" src="soso.jpg" width="1280" height="853" alt="Sophia com vestido verde na decoração de fundo do mar">
       <h1>Sophia faz 1 aninho!</h1>
-      <p class="sub">Compartilhe as fotos que você tirou na festa.<br>Elas vão direto para o álbum da família 💛</p>
     </header>
 
     <div class="actions">

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Soso faz 1 aninho!</title>
+  <title>Sophia faz 1 aninho!</title>
   <style>
     :root {
       --bg: #fff7f0;
@@ -36,15 +36,6 @@
     .hero { display: block; width: 100%; height: auto; border-radius: 20px; box-shadow: 0 6px 0 rgba(0,0,0,.08); }
     h1 { font-size: 30px; margin: 12px 0 6px; letter-spacing: -0.5px; }
     .sub { color: var(--muted); margin: 0; font-size: 16px; line-height: 1.4; }
-
-    label.name {
-      display: block; font-size: 14px; color: var(--muted); margin: 0 4px 6px;
-    }
-    input[type=text] {
-      width: 100%; font-size: 17px; padding: 14px 16px; border-radius: 14px;
-      border: 2px solid #f0e4ea; background: var(--card); color: var(--ink); outline: none;
-    }
-    input[type=text]:focus { border-color: var(--pink); }
 
     .actions { display: grid; gap: 14px; margin: 22px 0 8px; }
     .btn {
@@ -89,13 +80,10 @@
 <body>
   <main>
     <header>
-      <img class="hero" src="soso.jpg" width="1280" height="853" alt="Soso com vestido verde na decoração de fundo do mar">
-      <h1>Soso faz 1 aninho!</h1>
+      <img class="hero" src="soso.jpg" width="1280" height="853" alt="Sophia com vestido verde na decoração de fundo do mar">
+      <h1>Sophia faz 1 aninho!</h1>
       <p class="sub">Compartilhe as fotos que você tirou na festa.<br>Elas vão direto para o álbum da família 💛</p>
     </header>
-
-    <label class="name" for="guest">Seu nome (opcional)</label>
-    <input type="text" id="guest" placeholder="Ex.: Tia Ana" autocomplete="name" maxlength="40">
 
     <div class="actions">
       <button class="btn camera" type="button" onclick="document.getElementById('camera').click()">
@@ -121,12 +109,8 @@
     const JPEG_QUALITY = 0.88;
     const MAX_RAW_BYTES = 35 * 1024 * 1024; // limite quando não dá para comprimir
 
-    const guestInput = document.getElementById('guest');
     const statusEl = document.getElementById('status');
     const grid = document.getElementById('grid');
-
-    guestInput.value = localStorage.getItem('guestName') || '';
-    guestInput.addEventListener('input', () => localStorage.setItem('guestName', guestInput.value.trim()));
 
     const queue = [];
     let running = false;
@@ -169,7 +153,7 @@
       const badge = item.el.querySelector('.badge');
       try {
         const dataUrl = await prepare(item.file);
-        await withRetry(() => send(dataUrl, guestInput.value.trim()), 3);
+        await withRetry(() => send(dataUrl), 3);
         item.el.className = 'thumb ok';
         badge.textContent = '✅';
         sent++;
@@ -244,12 +228,12 @@
       });
     }
 
-    async function send(dataUrl, name) {
+    async function send(dataUrl) {
       // Corpo como text/plain: requisição "simples", sem preflight de CORS.
       const res = await fetch(API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({ image: dataUrl, name }),
+        body: JSON.stringify({ image: dataUrl }),
       });
       const data = await res.json();
       if (!data.ok) throw new Error(data.error || 'Falha no envio');

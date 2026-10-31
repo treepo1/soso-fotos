@@ -4,6 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Sophia faz 1 aninho!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap">
   <style>
     :root {
       --bg: #fff7f0;
@@ -28,7 +31,7 @@
         url(fundo.jpg) top / 100% 800% no-repeat var(--bg);
     }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-family: "Fredoka", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       color: var(--ink);
       min-height: 100vh;
       padding: max(24px, env(safe-area-inset-top)) 20px max(32px, env(safe-area-inset-bottom));
@@ -42,7 +45,7 @@
     .btn {
       display: flex; align-items: center; justify-content: center; gap: 12px;
       width: 100%; padding: 22px 16px; border-radius: 20px; border: 0;
-      font-size: 20px; font-weight: 700; color: #fff; cursor: pointer;
+      font-family: inherit; font-size: 20px; font-weight: 700; color: #fff; cursor: pointer;
       box-shadow: 0 6px 0 rgba(0,0,0,.08);
       transition: transform .08s ease;
     }
@@ -74,8 +77,6 @@
       animation: spin .8s linear infinite;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
-
-    footer { text-align: center; color: var(--muted); font-size: 13px; margin-top: 28px; }
   </style>
 </head>
 <body>
@@ -99,8 +100,6 @@
 
     <div class="status" id="status"></div>
     <div class="grid" id="grid"></div>
-
-    <footer>Obrigado por celebrar com a gente! 🥳</footer>
   </main>
 
   <script>

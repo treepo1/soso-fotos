@@ -29,20 +29,15 @@
       background-attachment: fixed;
       color: var(--ink);
       min-height: 100vh;
-      padding: max(44px, env(safe-area-inset-top)) 32px max(44px, env(safe-area-inset-bottom));
+      padding: max(24px, env(safe-area-inset-top)) 20px max(32px, env(safe-area-inset-bottom));
     }
     main { position: relative; z-index: 1; max-width: 440px; margin: 0 auto; }
 
     .sea {
-      position: fixed; inset: 0; pointer-events: none;
-      font-size: clamp(20px, 3vw, 40px); line-height: 1;
+      position: fixed; inset: 0; overflow: hidden; pointer-events: none;
+      font-size: clamp(28px, 4vw, 48px); line-height: 1; opacity: .4;
     }
-    .sea div { position: absolute; display: flex; justify-content: space-between; }
-    .sea .top { top: 6px; left: 4px; right: 4px; }
-    .sea .bottom { bottom: 6px; left: 4px; right: 4px; }
-    .sea .left, .sea .right { top: 2.2em; bottom: 2.2em; flex-direction: column; }
-    .sea .left { left: 4px; }
-    .sea .right { right: 4px; }
+    .sea span { position: absolute; }
 
     header { text-align: center; margin: 8px 0 28px; }
     .hero { display: block; width: 100%; height: auto; border-radius: 20px; box-shadow: 0 6px 0 rgba(0,0,0,.08); }
@@ -91,10 +86,24 @@
 </head>
 <body>
   <div class="sea" aria-hidden="true">
-    <div class="top"><span>🐙</span><span>🐠</span><span>🐢</span><span>🐚</span><span>🐬</span><span>🦀</span></div>
-    <div class="left"><span>🐡</span><span>🦞</span><span>⭐</span><span>🐟</span><span>🦑</span></div>
-    <div class="right"><span>🐳</span><span>🐚</span><span>🐠</span><span>🐙</span><span>🐢</span></div>
-    <div class="bottom"><span>🦀</span><span>🐬</span><span>🐟</span><span>🐡</span><span>🦞</span><span>🐳</span></div>
+    <span style="left:6%;top:3%;transform:rotate(-24deg)">🐙</span>
+    <span style="left:38%;top:7%;transform:rotate(18deg)">🐠</span>
+    <span style="left:78%;top:2%;transform:rotate(32deg)">🐢</span>
+    <span style="left:88%;top:17%;transform:rotate(-16deg)">🐚</span>
+    <span style="left:2%;top:21%;transform:rotate(28deg)">🐬</span>
+    <span style="left:52%;top:27%;transform:rotate(-34deg)">🦀</span>
+    <span style="left:20%;top:36%;transform:rotate(14deg)">🐡</span>
+    <span style="left:84%;top:40%;transform:rotate(40deg)">🦞</span>
+    <span style="left:4%;top:50%;transform:rotate(-30deg)">⭐</span>
+    <span style="left:60%;top:53%;transform:rotate(22deg)">🐟</span>
+    <span style="left:32%;top:62%;transform:rotate(-12deg)">🦑</span>
+    <span style="left:88%;top:65%;transform:rotate(-26deg)">🐳</span>
+    <span style="left:8%;top:73%;transform:rotate(20deg)">🐚</span>
+    <span style="left:50%;top:78%;transform:rotate(-38deg)">🐠</span>
+    <span style="left:78%;top:85%;transform:rotate(16deg)">🐙</span>
+    <span style="left:24%;top:88%;transform:rotate(-20deg)">🐢</span>
+    <span style="left:3%;top:94%;transform:rotate(34deg)">🦀</span>
+    <span style="left:58%;top:95%;transform:rotate(-14deg)">🐬</span>
   </div>
 
   <main>
